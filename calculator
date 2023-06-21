@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <cs50.h>
+ 
+int pointcalc(int start, int end);
+ 
+int main(void)
+{
+    int level;
+    int goal;
+    //get current level + goal level
+    do
+    {
+        level = get_int("Current level? ");
+        goal = get_int("Goal level? ");
+    }
+    while (level < 0 && goal > 25 && level > goal);
+ 
+    //calculate total required - already done
+    int points = (pointcalc(0, goal) - pointcalc(0, level));
+    printf("%i points.\n", points);
+}
+ 
+int pointcalc(int start, int end)
+{
+    int req = 0;
+    int points = 0;
+    //calculate points from 0-4
+    for(int inc = 0; start < 4 && start < end; start++)
+    {
+        inc += 25;
+        points += inc;
+        req += points;
+    }
+    //calculate points from 4-10
+    for(int inc = 125; start < 10 && start < end; start++)
+    {
+        points += inc;
+        req += points;
+    }
+    //calculate points from 10-25
+    for(int inc = 100; start < end; start++)
+    {
+        points += inc;
+        req += points;
+    }
+    return req;
+}
